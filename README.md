@@ -2,35 +2,81 @@
 
 ## users テーブル
 
-| Column             | Type   | Options     |
-| ------------------ | ------ | ----------- |
-| nickname           | string | null: false |
-| email              | string | null: false, unique: true |
-| encrypted_password | string | null: false |
-| first_name         | string | null: false |
-| last_name          | string | null: false |
-| first_name_kana    | string | null: false |
-| last_name_kane     | string | null: false |
-| profile            | string | null: false |
-| birthday           | string | null: false |
-| image              | string | null: false |
+| Column             | Type       | Options     |
+| ------------------ | ---------- | ----------- |
+| nickname           | string     | null: false, unique: true |
+| email              | string     | null: false, unique: true |
+| encrypted_password | string     | null: false |
+| last_name          | string     | null: false |
+| first_name         | string     | null: false |
+| last_name_kana     | string     | null: false |
+| first_name_kane    | string     | null: false |
+| birthday           | date       | null: false |
 
-## items
+### Association
 
-| Column             | Type   | Options     |
-| ------------------ | ------ | ----------- |
-| name               | string | null: false |
-| price              | string | null: false |
-| condition_id       | string | null: false |
-| explanation        | string | null: false |
-| size_id            | string | null: false |
-| shipping_area_id   | string | null: false |
-| shipping_price     | string | null: false |
-| shipping_date      | string | null: false |
-| shipping_method_id | string | null: false |
-| user_id            | string | null: false |
-| category_id        | string | null: false |
-| brand_id           | string | null: false |
+- has_many :items
+- has_many :orders
+- has_many :comments
+
+## items テーブル
+
+| Column             | Type       | Options     |
+| ------------------ | ---------- | ----------- |
 | user               | references | null: false, foreign_key: true |
-| brands             | references | null: false, foreign_key: true |
-| categories         | references | null: false, foreign_key: true |
+| name               | string     | null: false |
+| description        | text       | null: false |
+| category_id        | integer    | null: false |
+| item_status_id     | integer    | null: false |
+| shipping_cost_id   | integer    | null: false |
+| prefecture_id      | integer    | null: false |
+| shipping_date_id   | integer    | null: false |
+| price              | integer    | null: false |
+
+### Association
+
+- belongs_to :user
+- has_one :order
+- has_many :comments
+
+## orders テーブル
+
+| Column             | Type       | Options     |
+| ------------------ | ---------- | ----------- |
+| user               | references | null: false, foreign_key: true |
+| item               | references | null: false, foreign_key: true |
+
+### Association
+
+- belongs_to :user
+- belongs_to :item
+- has_one :payment
+
+## payments テーブル
+
+| Column             | Type       | Options     |
+| ------------------ | ---------- | ----------- |
+| orders             | references | null: false, foreign_key: true |
+| postcode           | string     | null: false |
+| prefecture_id      | integer    | null: false |
+| city               | string     | null: false |
+| block              | string     | null: false |
+| building           | string     |             |
+| phone_number       | string     | null: false |
+
+### Association
+
+- belongs_to :order
+
+## comments テーブル
+
+| Column             | Type       | Options     |
+| ------------------ | ---------- | ----------- |
+| user               | references | null: false, foreign_key: true |
+| item               | references | null: false, foreign_key: true |
+| text               | text       | null: false |
+
+### Association
+
+- belongs_to :user
+- belongs_to :item
