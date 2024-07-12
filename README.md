@@ -4,7 +4,7 @@
 
 | Column             | Type       | Options     |
 | ------------------ | ---------- | ----------- |
-| nickname           | string     | null: false, unique: true |
+| nickname           | string     | null: false |
 | email              | string     | null: false, unique: true |
 | encrypted_password | string     | null: false |
 | last_name          | string     | null: false |
@@ -17,7 +17,6 @@
 
 - has_many :items
 - has_many :orders
-- has_many :comments
 
 ## items テーブル
 
@@ -37,7 +36,6 @@
 
 - belongs_to :user
 - has_one :order
-- has_many :comments
 
 ## orders テーブル
 
@@ -57,7 +55,7 @@
 | Column             | Type       | Options     |
 | ------------------ | ---------- | ----------- |
 | orders             | references | null: false, foreign_key: true |
-| postcode           | string     | null: false |
+| post_code          | string     | null: false |
 | prefecture_id      | integer    | null: false |
 | city               | string     | null: false |
 | block              | string     | null: false |
@@ -67,16 +65,3 @@
 ### Association
 
 - belongs_to :order
-
-## comments テーブル
-
-| Column             | Type       | Options     |
-| ------------------ | ---------- | ----------- |
-| user               | references | null: false, foreign_key: true |
-| item               | references | null: false, foreign_key: true |
-| text               | text       | null: false |
-
-### Association
-
-- belongs_to :user
-- belongs_to :item
