@@ -65,10 +65,28 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include('Password is too long (maximum is 128 characters)')
       end
       it "passwordとpassword_confirmationが不一致では登録できない" do
-        @user.password = '123456'
-        @user.password_confirmation = '1234567'
+        @user.password = '12345f'
+        @user.password_confirmation = '12345k'
         @user.valid?
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
+      end
+      it "英字のみのパスワードでは登録できない" do
+        @user.password = 'abcdef'
+        @user.password_confirmation = 'abcdef'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid")
+      end
+      it "数字のみのパスワードでは登録できない" do
+        @user.password = '123456'
+        @user.password_confirmation = '123456'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid")
+      end
+      it "全角文字を含むパスワードでは登録できない" do
+        @user.password = '12345あ'
+        @user.password_confirmation = '12345あ'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid")
       end
       it '重複したemailが存在する場合は登録できない' do
         @user.save
