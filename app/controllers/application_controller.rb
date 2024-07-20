@@ -12,4 +12,10 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:nickname, :last_name, :first_name, :last_name_kana, :first_name_kana, :birthday])
   end
+
+#ログイン画面のSigned out successfully.表示を消す場合
+#  def after_sign_out_path_for(resource_or_scope)
+#    flash.delete(:notice)
+#    root_path
+#  end
 end

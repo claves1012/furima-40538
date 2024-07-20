@@ -1,5 +1,8 @@
 function item_price (){
   const itemPrice = document.getElementById("item-price");
+
+  if (itemPrice === null) return;
+
   itemPrice.addEventListener("keyup", () => {
     const tenPercentValue = Math.floor(itemPrice.value * 0.1);
     const charNum = document.getElementById("add-tax-price");
