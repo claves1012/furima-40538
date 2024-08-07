@@ -7,11 +7,16 @@ RSpec.describe OrderPayment, type: :model do
 
   describe '商品購入機能' do
     context '商品が購入できる場合' do
-      it "post_code、prefecture_id、city、block、phone_number、user_id、item_idが存在すれば登録できる" do
+      it "post_code、prefecture_id、city、block、phone_number、token、user_id、item_idが存在すれば登録できる" do
         expect(@orderpayment).to be_valid
       end
     end
     context '商品が購入できない場合' do
+      it "tokenが空では購入できない" do
+        @orderpayment.token = nil
+        @orderpayment.valid?
+        expect(@orderpayment.errors.full_messages).to include("Token can't be blank")
+      end
       it "post_codeが空では購入できない" do
         @orderpayment.post_code = ''
         @orderpayment.valid?
