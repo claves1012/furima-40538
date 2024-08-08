@@ -9,9 +9,9 @@ class OrderPayment
     validates :city
     validates :block
     validates :user_id
+    validates :item_id
     validates :phone_number, format: {with: /\A\d{10,11}\z/, message: "is invalid. Input a 10 to 11 digit number."}
   end
-  validates :building, presence: false
 
   def save
     ActiveRecord::Base.transaction do
