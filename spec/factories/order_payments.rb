@@ -5,6 +5,7 @@ FactoryBot.define do
     prefecture_id { 2 }
     city { '渋谷区' }
     block { '渋谷2-3' }
+    building { '渋谷ビル' }
     phone_number { '1234567890' }
   end
 end
