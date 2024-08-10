@@ -22,12 +22,4 @@ class Item < ApplicationRecord
             presence:true,
             numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999, only_integer: true },
             format: { with: /\A\d+\z/, message: "is invalid. Input half-width numbers."}
-
-  after_create :create_associated_order
-
-  private
-
-  def create_associated_order
-    create_order(user_id: self.user_id)
-  end
 end
